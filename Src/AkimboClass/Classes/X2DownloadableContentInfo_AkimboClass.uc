@@ -49,6 +49,32 @@ static event OnPostTemplatesCreated()	//Making sure that single shot abilities u
 
 	ReloadAbilityTemplate = AbilityTemplateManager.FindAbilityTemplate('Reload');
 	ReloadAbilityTemplate.BuildNewGameStateFn = CustomReloadAbility_BuildGameState;
+
+	AddSoldierIntroMap();
+}
+
+static event AddSoldierIntroMap()
+{
+	local X2StrategyElementTemplateManager StratMgr;
+	local X2FacilityTemplate FacilityTemplate;
+	local AuxMapInfo MapInfo;
+	local array<X2DataTemplate> AllHangarTemplates;
+	local X2DataTemplate Template;
+
+	// Grab manager
+	StratMgr = class'X2StrategyElementTemplateManager'.static.GetStrategyElementTemplateManager();
+
+	// Find all armory/hangar templates
+	StratMgr.FindDataTemplateAllDifficulties('Hangar', AllHangarTemplates);
+
+	foreach AllHangarTemplates(Template)
+	{
+		// Add Aux Maps to the template
+		FacilityTemplate = X2FacilityTemplate(Template);
+		MapInfo.MapName = "CIN_SoldierIntros_Akimbo";
+		MapInfo.InitiallyVisible = true;
+		FacilityTemplate.AuxMaps.AddItem(MapInfo);
+	}
 }
 
 simulated function XComGameState CustomReloadAbility_BuildGameState( XComGameStateContext Context )	//this is pretty much a copypaste of X2Ability_DefaultAbilitySet.ReloadAbility_BuildGameState

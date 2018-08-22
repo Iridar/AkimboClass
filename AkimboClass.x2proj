@@ -28,7 +28,19 @@ tags=soldier class, Wot, War of the Chosen, Dual Wield Pistols, Akimbo, Gun Fu</
     <Content Include="Config\XComGameData.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Content\CIN_SoldierIntros_Akimbo.umap">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\CIN_SoldierIntros_Akimbo_VIEWER.umap">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\SoundSpeechIridar.upk">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Content\WP_Akimbo.upk">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Localization\SoundSpeechIridar.int">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ReadMe.txt" />
@@ -50,6 +62,9 @@ tags=soldier class, Wot, War of the Chosen, Dual Wield Pistols, Akimbo, Gun Fu</
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\AkimboClass\Classes\X2Action_FaceEnemy.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Character_IridarVO.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\AkimboClass\Classes\X2Condition_DP_AmmoCondition.uc">

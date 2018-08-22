@@ -667,7 +667,6 @@ static function X2AbilityTemplate Create_DP_SpinningReload_Active()
 	local X2Effect_DPReloadEffect			DPReload;
 	local X2Condition_DP_AmmoCondition		AmmoCondition;
 	local array<name>                       SkipExclusions;
-	local X2Effect_DP_ReserveActionPoints   ReserveActionPointsEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'DP_SpinningReload_Active');
 
@@ -700,10 +699,6 @@ static function X2AbilityTemplate Create_DP_SpinningReload_Active()
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
 	ActionPointCost.iNumPoints = 1;
 	Template.AbilityCosts.AddItem(ActionPointCost);
-	
-	ReserveActionPointsEffect = new class'X2Effect_DP_ReserveActionPoints';	
-	ReserveActionPointsEffect.NumPoints = 1;
-	Template.AddTargetEffect(ReserveActionPointsEffect);
 
 	//if(default.RELOAD_THROW_ANIMATIONS) Template.CustomFireAnim = 'HL_ReloadThrow';
 	//else Template.CustomFireAnim = 'HL_Reload';
@@ -717,12 +712,15 @@ static function X2AbilityTemplate Create_DP_SpinningReload_Active()
 	Template.OverrideAbilities.AddItem('Reload');
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
+	//Template.BuildNewGameStateFn = class'X2Ability_DefaultAbilitySet'.static.ReloadAbility_BuildGameState;
 	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
 	Template.OverrideAbilityAvailabilityFn = Reload_OverrideAbilityAvailability;
 
 	Template.AdditionalAbilities.AddItem('DP_SpinningReload_EOT');
 	Template.AdditionalAbilities.AddItem('DP_SpinningReload_Reactive');
 
+	/* maybe make this ability not available if the soldier already has full ammo as well as Quicksilver Perk
+	*/
 	return Template;
 }
 
@@ -815,8 +813,8 @@ static function X2AbilityTemplate Create_DP_SpinningReload_Reactive()
 	return Template;
 }
 
-static function X2AbilityTemplate Create_DP_SpinningReload_EOT() 
-{																 
+static function X2AbilityTemplate Create_DP_SpinningReload_EOT() //this ability triggers at the beginning of your turn, just before Gun Kata Charges are removed
+{																 //triggering event fires in X2Effect_RemoveGunKataCharges
 	local X2AbilityTemplate                 Template;
 	local X2Effect_DPReloadEffect			DPReload;
 	local X2AbilityTrigger_EventListener	Trigger;
