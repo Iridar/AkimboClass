@@ -1,1 +1,0 @@
-class X2Effect_DualPistolBonus extends X2Effect_Persistent;

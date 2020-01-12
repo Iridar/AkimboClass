@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Default" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Guid>93081d4d-1e7a-4ef3-bdc3-734abd9a73b7</Guid>
+    <Name>Akimbo Class</Name>
+    <Description>Description of My XCOM 2 Mod.
+
+tags=soldier class, WoTC, War of the Chosen, Dual Wield Pistols, Akimbo, Gun Fu</Description>
+    <SteamPublishID>0</SteamPublishID>
+    <AssemblyName>AkimboClass</AssemblyName>
+    <RootNamespace>AkimboClass</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Config\" />
+    <Folder Include="Localization\" />
+    <Folder Include="Content" />
+    <Folder Include="Src\" />
+    <Folder Include="Src\AkimboClass\" />
+    <Folder Include="Src\AkimboClass\Classes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\XComAkimbo.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\XComClassData.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\XComDualWieldedPistols.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\XComGameData.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\CIN_SoldierIntros_Akimbo.umap">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\CIN_SoldierIntros_Akimbo_VIEWER.umap">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\SoundSpeechIridar.upk">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\WP_Akimbo.upk">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Localization\SoundSpeechIridar.int">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Localization\SoundSpeechIridar.rus">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Localization\XComGame.chn">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Localization\XComGame.rus">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ReadMe.txt" />
+    <Content Include="ModPreview.jpg" />
+    <Content Include="Config\XComEditor.ini" />
+    <Content Include="Config\XComEngine.ini" />
+    <Content Include="Config\XComGame.ini" />
+    <Content Include="Localization\XComGame.int" />
+    <Content Include="Src\AkimboClass\Classes\X2AbilityToHitCalc_DPMelee.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2AbilityToHitCalc_TrickShot.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Ability_AkimboAbilitySet.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Action_ApplyDamageSpacer.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Action_DelayedFireAction.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Action_FaceEnemy.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Character_IridarVO.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Condition_DP_AmmoCondition.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Condition_DP_CheckmateCondition.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Condition_DP_DualPistols.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Condition_DP_TrickShot.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2DownloadableContentInfo_AkimboClass.uc" />
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DPReloadEffect.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_ApplySecondaryWeaponDamage.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_CheckmateDamage.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_DamageModifier.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_ElectrifiedSpikes.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_HuntersInstinct.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_LimitBreak.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_PistolWhipCost.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_ReserveActionPoints.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_SelfDamage.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DualPistolBonus.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_ForceDodge.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_TrickShot_AimModifier.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2EventListener_AkimboSequentialShotPatcher.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\X2EventListener_GunKataUI.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\AkimboClass\Classes\XComGameState_AkimboClass.uc">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildLocalExtensionPath)\XCOM2.targets" />
+</Project>
