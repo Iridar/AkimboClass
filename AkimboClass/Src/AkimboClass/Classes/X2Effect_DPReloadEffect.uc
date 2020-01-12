@@ -9,11 +9,14 @@ simulated protected function OnEffectAdded(const out EffectAppliedData ApplyEffe
 	if (TargetUnit != none)
 	{
 		WeaponState = TargetUnit.GetItemInSlot(eInvSlot_PrimaryWeapon, NewGameState);
-		if (WeaponState != none)
+		NewWeaponState =  XComGameState_Item(NewGameState.GetGameStateForObjectID(WeaponState.ObjectID));
+		if (NewWeaponState == none)
 		{
-			NewWeaponState = XComGameState_Item(NewGameState.CreateStateObject(WeaponState.Class, WeaponState.ObjectID));
+			NewWeaponState = XComGameState_Item(NewGameState.ModifyStateObject(class'XComGameState_Item', WeaponState.ObjectID));
+		}
+		if (NewWeaponState != none)
+		{
 			NewWeaponState.Ammo = NewWeaponState.GetClipSize();
-			NewGameState.AddStateObject(NewWeaponState);
 		}
 	}
 }

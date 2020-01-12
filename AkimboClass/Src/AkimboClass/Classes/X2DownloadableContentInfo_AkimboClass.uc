@@ -23,7 +23,7 @@ static event OnLoadedSavedGame()
 /// </summary>
 static event InstallNewCampaign(XComGameState StartState)
 {}
-
+/*
 static function bool AbilityTagExpandHandler(string InString, out string OutString)	//I don't even know what this does, TBH. Copypasted it from New Skirmisher mod
 {
 	local name Type;
@@ -38,10 +38,10 @@ static function bool AbilityTagExpandHandler(string InString, out string OutStri
             return false;
 	}
 	return true;
-}
+}*/
 
 static event OnPostTemplatesCreated()
-{										
+{
 	AddSoldierIntroMap();
 	PatchPistolAbilityTemplates();
 }
@@ -71,39 +71,11 @@ static function PatchPistolAbilityTemplates()
 {
 	local X2AbilityTemplateManager			AbilityTemplateManager;
 	local X2AbilityTemplate					Ability;
-	local X2DataTemplate					DataTemplate;
-	local X2Effect							Effect;
-	local X2Effect_ReserveOverwatchPoints	ReserveAPEffect;
 	local int i;
 
 	AbilityTemplateManager = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager();
 
-	foreach AbilityTemplateManager.IterateTemplates(DataTemplate)
-	{
-		Ability = X2AbilityTemplate(DataTemplate);
-		foreach Ability.AbilityTargetEffects(Effect)
-		{
-			ReserveAPEffect = X2Effect_ReserveOverwatchPoints(Effect);
-			if (ReserveAPEffect != none)
-			{
-				Ability.AddTargetEffect(new class'X2Effect_DP_ReserveActionPoints');
-				break;
-			}
-			foreach Ability.AbilityShooterEffects(Effect)
-			{
-				ReserveAPEffect = X2Effect_ReserveOverwatchPoints(Effect);
-				if (ReserveAPEffect != none)
-				{
-					Ability.AddShooterEffect(new class'X2Effect_DP_ReserveActionPoints');
-					break;
-				}
-			}
-		}
-		
-	}
-	X2Effect_DP_ReserveActionPoints
-
-	//	Patch Fan Fire for RPGO
+	//	Patch Fan Fire for RPGO so it works with Bullet Time.
 	Ability = AbilityTemplateManager.FindAbilityTemplate('FanFire');
 	if (Ability != none)
 	{
@@ -112,7 +84,7 @@ static function PatchPistolAbilityTemplates()
 			if ( X2AbilityCost_ActionPoints(Ability.AbilityCosts[i]) != none )
 			{
 				X2AbilityCost_ActionPoints(Ability.AbilityCosts[i]).DoNotConsumeAllSoldierAbilities.AddItem('DP_BulletTime');
-				break;
+				//break; //	don't exit in case there are several Action Costs
 			}
 		}
 	}
@@ -126,7 +98,16 @@ static function PatchPistolAbilityTemplates()
 		Ability.PostActivationEvents.AddItem('DP_SpinningReload_Reactive');
 	}
 
-	//	Patch Pistol Standard Shot
+	//	Patch Reload so it grants an Overwatch AP if the soldier has Spinning Reload
+	//	Pointless, reload has a custom Build Game State and doesn't apply effects normally.
+	/*
+	Ability = AbilityTemplateManager.FindAbilityTemplate('Reload');
+	if (Ability != none)
+	{
+		Ability.AddShooterEffect(new class'X2Effect_SpinningReloadAP');
+	}*/
+	
+	//	Patch Pistol Standard Shot to work with Bullet Time
 	Ability = AbilityTemplateManager.FindAbilityTemplate('PistolStandardShot');
 	if (Ability != none)
 	{
@@ -140,17 +121,22 @@ static function PatchPistolAbilityTemplates()
 		}
 	}
 	if (i > Ability.AbilityCosts.Length) `redscreen("Warning, PatchPistolAbilityTemplates in Akimbo OPTC didn't find expected Action Point Ability Cost in PistolStandardShot.-Iridar");
-	/*
-	if (Ability != none && X2AbilityCost_ActionPoints(Ability.AbilityCosts[0]) != none)
-	{
-		//	Make it so Pistol Shot doesn't end turn if the soldier has Bullet Time perk.
-		X2AbilityCost_ActionPoints(Ability.AbilityCosts[0]).DoNotConsumeAllSoldierAbilities.AddItem('DP_BulletTime');
-	}
-	else
-	{
-		`redscreen("Warning, PatchPistolAbilityTemplates in Akimbo OPTC didn't find expected Action Point Ability Cost in PistolStandardShot.-Iridar");
-	}*/
 }
+
+
+//	Add Spinning Reload animation if the soldier has this ability
+static function UpdateAnimations(out array<AnimSet> CustomAnimSets, XComGameState_Unit UnitState, XComUnitPawn Pawn)
+{
+    if(!UnitState.IsSoldier())
+    {
+        return;
+    }
+	if (UnitState.HasSoldierAbility('DP_SpinningReload_Passive', true))
+	{
+		CustomAnimSets.AddItem(AnimSet(`CONTENT.DynamicLoadObject("WP_Akimbo.Anims.AS_SpinningReload", class'AnimSet')));
+	}
+}
+
 /*
 static function FinalizeUnitAbilitiesForInit(XComGameState_Unit UnitState, out array<AbilitySetupData> SetupData, optional XComGameState StartState, optional XComGameState_Player PlayerState, optional bool bMultiplayerDisplay)
 {

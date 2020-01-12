@@ -38,7 +38,7 @@ static function EventListenerReturn OnOverrideFocus(Object EventData, Object Eve
 	UnitState = XComGameState_Unit(EventSource);
 
 	//doing the class / effect checks to ensure compatibility with AWC and RPGO, while not cluttering UI for other classes.
-	if (UnitState.HasSoldierAbility('DP_Quicksilver') || UnitState.HasSoldierAbility('DP_GunKata_Active') || UnitState.IsUnitAffectedByEffectName(class'X2Effect_DP_LimitBreak'.default.EffectName))
+	if (UnitState.HasSoldierAbility('DP_Quicksilver') || UnitState.HasSoldierAbility('DP_GunKata') || UnitState.IsUnitAffectedByEffectName(class'X2Effect_DP_LimitBreak'.default.EffectName))
 	{
 		if(UnitState.IsUnitAffectedByEffectName(class'X2Effect_DP_LimitBreak'.default.EffectName))
 		{
@@ -62,7 +62,7 @@ static function EventListenerReturn OnOverrideFocus(Object EventData, Object Eve
 			ReservedAP += UnitState.NumReserveActionPoints(class'X2CharacterTemplateManager'.default.OverwatchReserveActionPoint);
 
 			MaxAP = 1;
-			if (UnitState.HasSoldierAbility('DP_GunKata_Active')) 
+			if (UnitState.HasSoldierAbility('DP_GunKata')) 
 			{
 				MaxAP += 1;
 				TooltipLong = "Gun Kata Action Points remaining.";

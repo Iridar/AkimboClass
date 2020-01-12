@@ -110,6 +110,9 @@ tags=soldier class, WoTC, War of the Chosen, Dual Wield Pistols, Akimbo, Gun Fu<
     <Content Include="Src\AkimboClass\Classes\X2Effect_DP_ElectrifiedSpikes.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_GunKata.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\AkimboClass\Classes\X2Effect_DP_HuntersInstinct.uc">
       <SubType>Content</SubType>
     </Content>
@@ -119,16 +122,16 @@ tags=soldier class, WoTC, War of the Chosen, Dual Wield Pistols, Akimbo, Gun Fu<
     <Content Include="Src\AkimboClass\Classes\X2Effect_DP_PistolWhipCost.uc">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_ReserveActionPoints.uc">
+    <Content Include="Src\AkimboClass\Classes\X2Effect_DP_Quicksilver.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\AkimboClass\Classes\X2Effect_DP_SelfDamage.uc">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Src\AkimboClass\Classes\X2Effect_DualPistolBonus.uc">
+    <Content Include="Src\AkimboClass\Classes\X2Effect_ForceDodge.uc">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Src\AkimboClass\Classes\X2Effect_ForceDodge.uc">
+    <Content Include="Src\AkimboClass\Classes\X2Effect_SpinningReloadAP.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\AkimboClass\Classes\X2Effect_TrickShot_AimModifier.uc">
@@ -138,9 +141,6 @@ tags=soldier class, WoTC, War of the Chosen, Dual Wield Pistols, Akimbo, Gun Fu<
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\AkimboClass\Classes\X2EventListener_GunKataUI.uc">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Src\AkimboClass\Classes\XComGameState_AkimboClass.uc">
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>

@@ -1,6 +1,6 @@
 class X2Effect_ForceDodge extends X2Effect_Persistent;
 
-//this persistent effect turns any hits into misses at the cost of Gun Kata Charges
+//this persistent effect turns any hits into misses at the cost of Overwatch Action Points
 
 function RegisterForEvents(XComGameState_Effect EffectGameState)
 {
@@ -20,21 +20,6 @@ function bool ChangeHitResultForTarget(XComGameState_Effect EffectState, XComGam
 	local X2EventManager		EventMgr;
 	local XComGameState_Ability	GunKataAbilityState;
 	local int j;
-
-	/*local XComGameStateContext_Ability          AbilityContext;
-	local XComGameStateContext					Context;
-
-	`Log("IRIDAR ChangeHitResultForTarget 1 Triggered: ",, 'AkimboClass');
-
-	Context = AbilityState.GetParentGameState().GetContext();
-	AbilityContext = XComGameStateContext_Ability(Context);
-
-	`Log("IRIDAR Effects #: " @ AbilityContext.ResultContext.TargetEffectResults.Effects.Length,, 'AkimboClass');
-
-	for (j = 0; j < AbilityContext.ResultContext.TargetEffectResults.Effects.Length; ++j)
-	{
-		`Log("IRIDAR Effect: " @ AbilityContext.ResultContext.TargetEffectResults.Effects[j],, 'AkimboClass');
-	}*/
 
 	if(TargetUnit.IsAbleToAct())	//I assume this checks our soldier isn't stunned / bound / etc
 	{
