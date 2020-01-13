@@ -305,7 +305,7 @@ static function X2AbilityTemplate Create_DP_SpinningReload_Reactive()
 	ReserveActionPointCost.AllowedTypes.AddItem(class'X2CharacterTemplateManager'.default.OverwatchReserveActionPoint);
 	Template.AbilityCosts.AddItem(ReserveActionPointCost);
 
-	//	Trigger on a special event that gets activated after a successful Gun Kata dodge or after Secondary Shot (patched in OPTC of this mod).
+	//	Trigger on a special event that gets activated after getting shot or after Secondary Shot (patched in OPTC of this mod).
 	Trigger = new class'X2AbilityTrigger_EventListener';		//trigger on a dodge - probably will never happen in actual game
 	Trigger.ListenerData.EventID = 'DP_SpinningReload_Reactive';//since you need to get shot while having 0 ammo and still have at least 2 Overwatch AP remaining
 	Trigger.ListenerData.Deferral = ELD_OnStateSubmitted;

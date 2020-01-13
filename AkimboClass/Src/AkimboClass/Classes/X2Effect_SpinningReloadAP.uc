@@ -110,9 +110,7 @@ static function EventListenerReturn TriggerAbilityFlyover(Object EventData, Obje
 static function OverwatchAbility_BuildVisualization(XComGameState VisualizeGameState)
 {
 	local XComGameStateHistory			History;
-	local XComGameStateContext_Ability  Context;
-	local StateObjectReference          InteractingUnitRef;
-	local VisualizationActionMetadata   EmptyTrack;
+	local XComGameState_Ability			AbilityState;
 	local VisualizationActionMetadata   ActionMetadata;
 	local X2Action_PlaySoundAndFlyOver	SoundAndFlyOver;
 	local UnitValue						EverVigilantValue;
@@ -120,52 +118,52 @@ static function OverwatchAbility_BuildVisualization(XComGameState VisualizeGameS
 	local X2AbilityTemplate				AbilityTemplate;
 	local string						FlyOverText, FlyOverImage;
 
-	History = `XCOMHISTORY;
-
-	Context = XComGameStateContext_Ability(VisualizeGameState.GetContext());
-	InteractingUnitRef = Context.InputContext.SourceObject;
-
-	`LOG("Running build viz, context: " @ Context != none @ "Interacting Unit: " @ InteractingUnitRef.ObjectID, class'X2Ability_AkimboAbilitySet'.default.ENABLE_LOGGING, 'IRISPINNINGRELOAD');
-
-	//Configure the visualization track for the shooter
-	//****************************************************************************************
-	ActionMetadata = EmptyTrack;
-	ActionMetadata.StateObject_OldState = History.GetGameStateForObjectID(InteractingUnitRef.ObjectID, eReturnType_Reference, VisualizeGameState.HistoryIndex - 1);
-	ActionMetadata.StateObject_NewState = VisualizeGameState.GetGameStateForObjectID(InteractingUnitRef.ObjectID);
-	ActionMetadata.VisualizeActor = History.GetVisualizer(InteractingUnitRef.ObjectID);
-
-	UnitState = XComGameState_Unit(ActionMetadata.StateObject_NewState);
-	if (UnitState != none)
-	{		
-		if (UnitState.GetUnitValue(class'X2Ability_SpecialistAbilitySet'.default.EverVigilantEffectName, EverVigilantValue) && EverVigilantValue.fValue > 0)
+	foreach VisualizeGameState.IterateByClassType(class'XComGameState_Unit', UnitState)
+	{
+		foreach VisualizeGameState.IterateByClassType(class'XComGameState_Ability', AbilityState)
 		{
-			AbilityTemplate = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager().FindAbilityTemplate('EverVigilant');
-			if (UnitState.HasSoldierAbility('CoveringFire'))
-				FlyOverText = class'XLocalizedData'.default.EverVigilantWithCoveringFire;
-			else
+			History = `XCOMHISTORY;
+			`LOG("Running build viz, Interacting Unit: " @ UnitState.GetFullName(), class'X2Ability_AkimboAbilitySet'.default.ENABLE_LOGGING, 'IRISPINNINGRELOAD');
+
+			//Configure the visualization track for the shooter
+			//****************************************************************************************
+			ActionMetadata.StateObject_OldState = History.GetGameStateForObjectID(UnitState.ObjectID, eReturnType_Reference, VisualizeGameState.HistoryIndex - 1);
+			ActionMetadata.StateObject_NewState = UnitState;
+			ActionMetadata.VisualizeActor = History.GetVisualizer(UnitState.ObjectID);
+
+			if (UnitState.GetUnitValue(class'X2Ability_SpecialistAbilitySet'.default.EverVigilantEffectName, EverVigilantValue) && EverVigilantValue.fValue > 0)
+			{
+				AbilityTemplate = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager().FindAbilityTemplate('EverVigilant');
+				if (UnitState.HasSoldierAbility('CoveringFire'))
+					FlyOverText = class'XLocalizedData'.default.EverVigilantWithCoveringFire;
+				else
+					FlyOverText = AbilityTemplate.LocFlyOverText;
+				FlyOverImage = AbilityTemplate.IconImage;
+			}
+			else if (UnitState.HasSoldierAbility('CoveringFire'))
+			{
+				AbilityTemplate = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager().FindAbilityTemplate('CoveringFire');
 				FlyOverText = AbilityTemplate.LocFlyOverText;
-			FlyOverImage = AbilityTemplate.IconImage;
+				FlyOverImage = AbilityTemplate.IconImage;
+			}
+			else if (UnitState.HasSoldierAbility('SkirmisherAmbush'))
+			{
+				AbilityTemplate = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager().FindAbilityTemplate('SkirmisherAmbush');
+				FlyOverText = AbilityTemplate.LocFlyOverText;
+				FlyOverImage = AbilityTemplate.IconImage;
+			}
+			else
+			{
+				AbilityTemplate = AbilityState.GetMyTemplate();
+				FlyOverText = AbilityTemplate.LocFlyOverText;
+				FlyOverImage = AbilityTemplate.IconImage;
+			}
+			`LOG("Playing sound:" @ SoundCue(`CONTENT.DynamicLoadObject("SoundUI.OverwatchCue", class'SoundCue')) != none, class'X2Ability_AkimboAbilitySet'.default.ENABLE_LOGGING, 'IRISPINNINGRELOAD');
+			SoundAndFlyOver = X2Action_PlaySoundAndFlyOver(class'X2Action_PlaySoundAndFlyOver'.static.AddToVisualizationTree(ActionMetadata, VisualizeGameState.GetContext(), false, ActionMetadata.LastActionAdded));
+			SoundAndFlyOver.SetSoundAndFlyOverParameters(SoundCue(`CONTENT.DynamicLoadObject("SoundUI.OverwatchCue", class'SoundCue')), FlyOverText, '', eColor_Good, FlyOverImage);
+			
+			break;	
 		}
-		else if (UnitState.HasSoldierAbility('CoveringFire'))
-		{
-			AbilityTemplate = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager().FindAbilityTemplate('CoveringFire');
-			FlyOverText = AbilityTemplate.LocFlyOverText;
-			FlyOverImage = AbilityTemplate.IconImage;
-		}
-		else if (UnitState.HasSoldierAbility('SkirmisherAmbush'))
-		{
-			AbilityTemplate = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager().FindAbilityTemplate('SkirmisherAmbush');
-			FlyOverText = AbilityTemplate.LocFlyOverText;
-			FlyOverImage = AbilityTemplate.IconImage;
-		}
-		else
-		{
-			AbilityTemplate = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager().FindAbilityTemplate(Context.InputContext.AbilityTemplateName);
-			FlyOverText = AbilityTemplate.LocFlyOverText;
-			FlyOverImage = AbilityTemplate.IconImage;
-		}
-		`LOG("Playing sound:" @ SoundCue(`CONTENT.DynamicLoadObject("SoundUI.OverwatchCue", class'SoundCue')) != none, class'X2Ability_AkimboAbilitySet'.default.ENABLE_LOGGING, 'IRISPINNINGRELOAD');
-		SoundAndFlyOver = X2Action_PlaySoundAndFlyOver(class'X2Action_PlaySoundAndFlyOver'.static.AddToVisualizationTree(ActionMetadata, Context, false, ActionMetadata.LastActionAdded));
-		SoundAndFlyOver.SetSoundAndFlyOverParameters(SoundCue(`CONTENT.DynamicLoadObject("SoundUI.OverwatchCue", class'SoundCue')), FlyOverText, '', eColor_Good, FlyOverImage);
+		break;
 	}
 }

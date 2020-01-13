@@ -23,6 +23,9 @@ function bool ChangeHitResultForTarget(XComGameState_Effect EffectState, XComGam
 
 	if(TargetUnit.IsAbleToAct())	//I assume this checks our soldier isn't stunned / bound / etc
 	{
+		//trigger a spinning reload when getting shot. it will go through only if the soldier has 0 ammo and enough Overwatch AP.
+		`XEVENTMGR.TriggerEvent('DP_SpinningReload_Reactive', TargetUnit, TargetUnit); 
+
 		for (j = TargetUnit.ReserveActionPoints.Length - 1; j >= 0; --j)	//go through all reserve action point types the soldier has
 		{
 			if (TargetUnit.ReserveActionPoints[j] == class'X2CharacterTemplateManager'.default.PistolOverwatchReserveActionPoint ||
@@ -32,9 +35,6 @@ function bool ChangeHitResultForTarget(XComGameState_Effect EffectState, XComGam
 				{
 					TargetUnit.ReserveActionPoints.Remove(j, 1);	//apply action point cost
 					NewHitResult = eHit_LightningReflexes;					
-
-					//trigger a spinning reload when getting shot. it will go through only if the soldier has 0 ammo and enough Overwatch AP.
-					`XEVENTMGR.TriggerEvent('DP_SpinningReload_Reactive', TargetUnit, TargetUnit); 
 					
 					GunKataAbilityState = XComGameState_Ability(`XCOMHISTORY.GetGameStateForObjectID(TargetUnit.FindAbility('GunKata_Passive').ObjectID));
 					if (GunKataAbilityState != none)
