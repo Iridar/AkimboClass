@@ -119,6 +119,7 @@ static function X2AbilityTemplate Create_DP_TrickShot()
 	Template.IconImage = "img:///WP_Akimbo.UIIcons.TrickShot";
 	Template.ShotHUDPriority = class'UIUtilities_Tactical'.const.CLASS_CORPORAL_PRIORITY;
 	Template.AbilitySourceName = 'eAbilitySource_Perk';
+	Template.bDontDisplayInAbilitySummary = false;
 
 	X2AbilityToHitCalc_StandardAim(Template.AbilityToHitCalc).bAllowCrit = true;
 	X2AbilityToHitCalc_StandardAim(Template.AbilityToHitCalc).BuiltInCritMod = default.TRICK_SHOT_CRIT_CHANCE_BONUS;
@@ -442,6 +443,7 @@ static function X2AbilityTemplate Create_DP_Unload()
 	X2AbilityToHitCalc_StandardAim(Template.AbilityToHitCalc).BuiltInHitMod = default.UNLOAD_AIM_PENALTY;
 	Template.AbilitySourceName = 'eAbilitySource_Perk';
 	X2AbilityCost_Ammo(Template.AbilityCosts[0]).iAmmo = 3;
+	Template.bDontDisplayInAbilitySummary = false;
 
 	Template.IconImage = "img:///WP_Akimbo.UIIcons.Unload";
 	Template.ShotHUDPriority = class'UIUtilities_Tactical'.const.CLASS_COLONEL_PRIORITY;
@@ -1284,6 +1286,7 @@ static function X2AbilityTemplate Create_DP_LegShot()
 	Template.IconImage = "img:///WP_Akimbo.UIIcons.LegShot";
 	Template.ShotHUDPriority = class'UIUtilities_Tactical'.const.CLASS_CORPORAL_PRIORITY;
 	Template.AbilitySourceName = 'eAbilitySource_Perk';                                       // color of the icon
+	Template.bDontDisplayInAbilitySummary = false;
 
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
 	ActionPointCost.iNumPoints = 1;

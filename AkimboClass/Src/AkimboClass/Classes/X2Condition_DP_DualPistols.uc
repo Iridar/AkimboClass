@@ -13,28 +13,28 @@ event name CallAbilityMeetsCondition(XComGameState_Ability kAbility, XComGameSta
 	return 'AA_Whatever';
 }
 
-static function bool IsPrimaryPistolWeaponTemplate(X2WeaponTemplate WeaponTemplate)
-{
-	return WeaponTemplate != none &&
-		WeaponTemplate.InventorySlot == eInvSlot_PrimaryWeapon &&
-		default.PistolCategories.Find(WeaponTemplate.WeaponCat) != INDEX_NONE;
+static public function bool IsPrimaryPistolWeaponState(XComGameState_Item ItemState)
+{	
+	return ItemState != none && 
+		   ItemState.InventorySlot == eInvSlot_PrimaryWeapon && 
+		   default.PistolCategories.Find(ItemState.GetWeaponCategory()) != INDEX_NONE;
 }
 
-static function bool IsSecondaryPistolWeaponTemplate(X2WeaponTemplate WeaponTemplate)
-{
-	return WeaponTemplate != none &&
-		WeaponTemplate.InventorySlot == eInvSlot_SecondaryWeapon &&
-		default.PistolCategories.Find(WeaponTemplate.WeaponCat) != INDEX_NONE;
+static public function bool IsSecondaryPistolWeaponState(XComGameState_Item ItemState)
+{	
+	return ItemState != none && 
+		   ItemState.InventorySlot == eInvSlot_SecondaryWeapon && 
+		   default.PistolCategories.Find(ItemState.GetWeaponCategory()) != INDEX_NONE;
 }
 
-static function bool HasDualPistolEquipped(XComGameState_Unit UnitState, optional XComGameState CheckGameState)
+static public function bool HasDualPistolEquipped(XComGameState_Unit UnitState, optional XComGameState CheckGameState)
 {
-	local X2WeaponTemplate PrimaryTemplate, SecondaryTemplate;
+	local XComGameState_Item PrimaryWeapon, SecondaryWeapon;
 
-	PrimaryTemplate = X2WeaponTemplate(UnitState.GetItemInSlot(eInvSlot_PrimaryWeapon, CheckGameState).GetMyTemplate());
-	SecondaryTemplate = X2WeaponTemplate(UnitState.GetItemInSlot(eInvSlot_SecondaryWeapon, CheckGameState).GetMyTemplate());
+	PrimaryWeapon = UnitState.GetItemInSlot(eInvSlot_PrimaryWeapon, CheckGameState);
+	SecondaryWeapon = UnitState.GetItemInSlot(eInvSlot_SecondaryWeapon, CheckGameState);
 
-	return IsPrimaryPistolWeaponTemplate(PrimaryTemplate) &&
-		  IsSecondaryPistolWeaponTemplate(SecondaryTemplate) &&
-		  PrimaryTemplate.WeaponCat == SecondaryTemplate.WeaponCat; // can dual wield guns only with the same WeaponCat
-}
+	return 	IsPrimaryPistolWeaponState(PrimaryWeapon) &&
+			IsSecondaryPistolWeaponState(SecondaryWeapon) &&
+			PrimaryWeapon.GetWeaponCategory() == SecondaryWeapon.GetWeaponCategory(); // can dual wield guns only with the same WeaponCat
+}	
