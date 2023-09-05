@@ -1705,7 +1705,7 @@ static function X2AbilityTemplate PistolWhip(name TemplateName, string Hand)
 
 	DisorientedEffect = class'X2StatusEffects'.static.CreateDisorientedStatusEffect();
 	DisorientedEffect.ApplyChanceFn = DP_ElectrifiedSpikes_Disorient_ChanceCheck;
-	DisorientedEffect.iNumTurns = 1;
+	//DisorientedEffect.iNumTurns = 1;
 	DisorientedEffect.bRemoveWhenSourceDies = false;
 	Template.AddTargetEffect(DisorientedEffect);
 
